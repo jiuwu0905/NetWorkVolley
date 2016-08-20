@@ -68,7 +68,10 @@ public class GsonListRequest<T> extends Request<T> {
 	public GsonListRequest(String url, Type type, VolleyListener<T> listener,
 			VolleyErrorListener errorListener,boolean decryption) {
 		this(Method.DEPRECATED_GET_OR_POST, url, type, listener, errorListener ,decryption);
-		errorListener.method = listener.methodName;
+		if(errorListener != null){
+			errorListener.method = listener.methodName;
+		}
+
 	}
 	
 	

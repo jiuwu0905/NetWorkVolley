@@ -21,7 +21,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    provided 'de.greenrobot:eventbus:2.4.0'
-    provided files('libs/gson-2.2.4.jar')
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile files('libs/gson-2.2.4.jar')
     provided 'com.android.support:support-v4:23.3.0'
 }
