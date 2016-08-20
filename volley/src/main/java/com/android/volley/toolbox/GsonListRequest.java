@@ -16,9 +16,9 @@
 
 package com.android.volley.toolbox;
 
+import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.JsonError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -26,6 +26,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.encrypt.DES;
 import com.android.volley.tool.VolleyErrorListener;
 import com.android.volley.tool.VolleyListener;
@@ -35,8 +37,6 @@ import com.google.gson.JsonSyntaxException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A request for retrieving a T type response body at a given URL that also
@@ -107,10 +107,15 @@ public class GsonListRequest<T> extends Request<T> {
 			String jsonString = new String(response.data,
 					HttpHeaderParser.parseCharset(response.headers) );
 			if (decryption) {
+                if(TextUtils.isEmpty(mDesKey)){
+                    throw new VolleyError("do you forget to set the deskey");
+                }
 				jsonString = URLDecoder.decode(DES.Decrypt(jsonString, mDesKey), "utf-8");
 			}
-			Log.e("Terry","======================= Result ===================");
-			Log.e("Terry",jsonString);
+			if(VolleyLog.RESULT_DEBUG) {
+				Log.e("Terry", "======================= Result ===================");
+				Log.e("Terry", jsonString);
+			}
 			return (Response<T>) Response.success(
 					new Gson().fromJson(jsonString, type),HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {

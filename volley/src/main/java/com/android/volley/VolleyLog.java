@@ -29,6 +29,8 @@ public class VolleyLog {
 
     public static boolean DEBUG = Log.isLoggable(TAG, Log.VERBOSE);
 
+    public static boolean RESULT_DEBUG = Log.isLoggable("Terry", Log.VERBOSE);
+
     /**
      * Customize the log tag for your application, so that other apps
      * using Volley don't mix their logs with yours.

@@ -227,6 +227,7 @@ public class RequestQueue {
     public Request add(Request request) {
         // Tag the request as belonging to this queue and add it to the set of current requests.
 
+        request.setDesKey(mDesKey);
         request.setRequestQueue(this);
         synchronized (mCurrentRequests) {
             mCurrentRequests.add(request);

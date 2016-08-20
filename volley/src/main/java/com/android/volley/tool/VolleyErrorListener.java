@@ -1,5 +1,7 @@
 package com.android.volley.tool;
 
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
@@ -29,6 +31,7 @@ public class VolleyErrorListener implements Response.ErrorListener {
 
     @Override
     public void onErrorResponse(VolleyError error) {
+        Log.e("Terry","volley报错。。。",error);
         String text = null;
         // 将错误传递给前端
         if (showError) {
