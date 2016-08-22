@@ -38,6 +38,8 @@ public class SingleResult<T> extends Info {
         rst.method = this.method;
         rst.data = new ArrayList<T>();
         rst.data.add(data);
+        rst.msg = msg;
+        rst.method = msgbox;
         return rst;
 
     }

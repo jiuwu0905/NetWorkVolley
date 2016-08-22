@@ -19,6 +19,7 @@ package com.android.volley.toolbox;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.JsonError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -37,6 +38,7 @@ import com.google.gson.JsonSyntaxException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
+import java.util.Map;
 
 /**
  * A request for retrieving a T type response body at a given URL that also
@@ -52,6 +54,8 @@ public class GsonListRequest<T> extends Request<T> {
 	private Type type;
 
 	private boolean decryption;
+
+	private Map<String,String> mPostParams = null;
 
 	public GsonListRequest(String url, Type type, Listener<T> listener,
 			ErrorListener errorListener) {
@@ -73,8 +77,22 @@ public class GsonListRequest<T> extends Request<T> {
 		}
 
 	}
-	
-	
+
+
+	public void setPostParams(Map<String,String> map){
+		this.mPostParams = map;
+		if(VolleyLog.RESULT_DEBUG) {
+			Log.e("Terry", "======================= postparams ===================");
+			Log.e("Terry", mPostParams.toString());
+		}
+	}
+
+
+	@Override
+	protected Map<String, String> getParams() throws AuthFailureError {
+		return mPostParams;
+	}
+
 	public GsonListRequest(int method, String url, Type type,
 			Listener<T> listener, ErrorListener errorListener) {
 		this(method, url, type, listener, errorListener, false);
