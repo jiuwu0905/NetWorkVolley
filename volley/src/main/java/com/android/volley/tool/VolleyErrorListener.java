@@ -5,6 +5,8 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import de.greenrobot.event.EventBus;
+
 /**
  *
  *
@@ -41,6 +43,6 @@ public class VolleyErrorListener implements Response.ErrorListener {
                 text = "网络异常";
             }
         }
-        ListenerHelper.postError(method, text);
+        EventBus.getDefault().post(ListenerHelper.postError(method, text)) ;
     }
 }

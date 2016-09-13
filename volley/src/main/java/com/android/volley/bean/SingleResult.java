@@ -39,7 +39,7 @@ public class SingleResult<T> extends Info {
         rst.data = new ArrayList<T>();
         rst.data.add(data);
         rst.msg = msg;
-        rst.method = msgbox;
+        rst.msgbox = msgbox;
         return rst;
 
     }

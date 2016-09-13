@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+def android_versionName = "1.2"
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -8,7 +10,7 @@ android {
         minSdkVersion 11
         targetSdkVersion 11
         versionCode 1
-        versionName "1.0"
+        versionName android_versionName
     }
     buildTypes {
         release {
@@ -18,10 +20,35 @@ android {
     }
 }
 
+
+
+
+//定义一个函数，target是生成jar包的文件名，classDir是class文件所在的文件夹
+def makeJar(String target,String classDir){
+    exec{
+        executable "jar"   //调用jar
+        args "cvf",target
+        args "-C", classDir
+        args "","."
+    }
+}
+
+// 新建一个task,名为buildLib,依赖build(build是一个自带的task)
+task buildLib(dependsOn:['build'])<< {
+    makeJar("jumper_volley_"+android_versionName+".jar","build/intermediates/classes/debug")
+}
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile files('libs/gson-2.2.4.jar')
     provided 'com.android.support:support-v4:23.3.0'
+}
+
+android {
+    lintOptions {
+        abortOnError false
+    }
 }
