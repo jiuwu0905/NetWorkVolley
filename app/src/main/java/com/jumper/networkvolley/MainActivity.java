@@ -12,8 +12,7 @@ import android.view.View;
 
 import com.android.volley.VolleyLog;
 import com.android.volley.bean.Result;
-import com.android.volley.bean.SingleResult;
-import com.android.volley.tool.SingleObjectVolleyListener;
+import com.android.volley.bean.ResultList;
 import com.android.volley.tool.VolleyErrorListener;
 import com.android.volley.tool.VolleyListener;
 import com.android.volley.toolbox.GsonListRequest;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                getUserInfo();
+//                getUserInfo();
 
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -59,12 +58,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressWarnings("unchecked")
     public void onEvent(Result result){
         if("jumper.usercenter.get.userInfo".equals(result.method)){
-            Log.d("Terry", ((UserInfo) result.data.get(0)).toString());
+//            UserInfo userInfo = (UserInfo)result.data;
+//
+//            Log.d("Terry",userInfo.toString());
+
+
+
+
+//            if(result instanceof ResultList){
+                UserInfo info = ((ResultList<UserInfo>)result).getFirstItem();
+
+                Log.d("Terry", info.toString());
+
+
+
         }else{
-            if(result.data.isEmpty()) return;
-            Log.d("Terry",((NewsDetails)result.data.get(0)).toString());
+//            if(result.data.isEmpty()) return;
+
+            NewsDetails newsDetails = (NewsDetails)result.getSingleItem();
+
+
+
+            Log.d("Terry",newsDetails.toString());
         }
     }
 
@@ -74,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
     public  void getUserInfo(){
         String method = "jumper.usercenter.get.userInfo";
         String url = " http://mobile.jumper-health.com/mobile/api/v3/handler.do?method=jumper.usercenter.get.userInfo&params=60ABA304E94758C8F0B757FC16ED1CAAC9622D209253F0A347AE7E40DB5DA21C&sign=DBFABC63F8E9571C8E98BF4E014ADB54";
-        GsonListRequest<Result<UserInfo>> gsonListRequest = new GsonListRequest<Result<UserInfo>>(url,
-                new TypeToken<Result<UserInfo>>() {
+        GsonListRequest<ResultList<UserInfo>> gsonListRequest = new GsonListRequest<ResultList<UserInfo>>(url,
+                new TypeToken<ResultList<UserInfo>>() {
                 }.getType(),
-                new VolleyListener<Result<UserInfo>>(method),
+                new VolleyListener<ResultList<UserInfo>>(method),
                 new VolleyErrorListener(), true);
         VolleyReqest.getInstance(this).addReqesut(gsonListRequest);
     }
@@ -88,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
     public void getNewsDetails(){
         String method = "jumper.news.news.newsDetail";
         String url = "http://mobile.jumper-health.com:80/mobile/api/handler.do?method=jumper.news.news.newsDetail&params=563D78FEF6EFF8BE81D4245DE9FB86418131129C5C6D34BBB4FC007215C65692DF5B78DAEF0164BA3B3AD6444AC72CCA447D447A8C73FEA1E2CBCE37735A7D42A4C7103FC11A3BEAD0E33E4D85AB97D057CE648C75429734&sign=28B9DEC6259EE924398CD35B53E1AFFF";
-        GsonListRequest<SingleResult<NewsDetails>> gsonListRequest = new GsonListRequest<SingleResult<NewsDetails>>(url,
-                new TypeToken<SingleResult<NewsDetails>>() {
+        GsonListRequest<Result<NewsDetails>> gsonListRequest = new GsonListRequest<Result<NewsDetails>>(url,
+                new TypeToken<Result<NewsDetails>>() {
                 }.getType(),
-                new SingleObjectVolleyListener<SingleResult<NewsDetails>>(method),
+                new VolleyListener<Result<NewsDetails>>(method),
                 new VolleyErrorListener(), true);
         VolleyReqest.getInstance(this).addReqesut(gsonListRequest);
 

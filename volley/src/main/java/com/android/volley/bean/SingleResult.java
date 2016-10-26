@@ -1,7 +1,5 @@
 package com.android.volley.bean;
 
-import java.util.ArrayList;
-
 /**
  * Created by Terry on 2016/8/19.
  * 单对象请求
@@ -33,16 +31,16 @@ public class SingleResult<T> extends Info {
      *
      * @return
      */
-    public  Result<T> getResult(){
-        Result<T> rst = new Result<>();
-        rst.method = this.method;
-        rst.data = new ArrayList<T>();
-        rst.data.add(data);
-        rst.msg = msg;
-        rst.msgbox = msgbox;
-        return rst;
-
-    }
+//    public  Result<T> getResult(){
+//        Result<T> rst = new Result<>();
+//        rst.method = this.method;
+//        rst.data = new ArrayList<T>();
+//        rst.data.add(data);
+//        rst.msg = msg;
+//        rst.msgbox = msgbox;
+//        return rst;
+//
+//    }
 
 
 

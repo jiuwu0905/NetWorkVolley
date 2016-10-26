@@ -2,7 +2,6 @@ package com.android.volley.tool;
 
 import android.text.TextUtils;
 
-import com.android.volley.bean.Result;
 import com.android.volley.bean.SingleResult;
 
 /**
@@ -45,7 +44,7 @@ public class SingleObjectVolleyListener<T> extends VolleyListener<T>{
             return ;
         }
 
-        sendOkMessage(result.getResult());
+//        sendOkMessage(result.getResult());
         //Result<T> fixResult = result.getResult();
     }
 }
