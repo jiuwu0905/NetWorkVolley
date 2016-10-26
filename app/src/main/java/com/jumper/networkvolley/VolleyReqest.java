@@ -22,12 +22,10 @@ public class VolleyReqest {
 
     private VolleyReqest(Context context){
         ArrayMap<String,String> map = new ArrayMap<String , String>();
-
         map.put("name","hello");
-
         HttpStack httpStack = new HurlStack(map);
         mRequestQueue  =  Volley.newRequestQueue(context, httpStack);
-        mRequestQueue.setDesKey("");
+        mRequestQueue.setDesKey("*JUMPER*");
 
     }
 
