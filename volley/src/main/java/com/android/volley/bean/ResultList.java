@@ -18,4 +18,11 @@ public class ResultList<T> extends Result<List<T>>{
     }
 
 
+
+    public boolean isEmpty(){
+        if(data == null) return false;
+        return data.isEmpty();
+    }
+
+
 }

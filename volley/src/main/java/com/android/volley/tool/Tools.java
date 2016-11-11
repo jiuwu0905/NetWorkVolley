@@ -32,6 +32,6 @@ public class Tools {
         if(info.data instanceof List){
             return ((List)info.data).isEmpty();
         }
-       return true;
+       return false;
     }
 }

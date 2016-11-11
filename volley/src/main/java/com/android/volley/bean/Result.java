@@ -36,4 +36,10 @@ public class Result<T> extends  Info {
     }
 
 
+    public boolean isEmpty(){
+        return data == null;
+    }
+
+
+
 }
