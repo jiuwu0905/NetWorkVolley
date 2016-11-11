@@ -17,11 +17,16 @@
 package com.android.volley;
 
 
+import com.android.volley.bean.Info;
+
 /**
  * Indicates that the server's response could not be parsed.
  */
 @SuppressWarnings("serial")
 public class ParseError extends VolleyError {
+
+    private Info info;
+
     public ParseError() { }
 
     public ParseError(NetworkResponse networkResponse) {
@@ -31,4 +36,13 @@ public class ParseError extends VolleyError {
     public ParseError(Throwable cause) {
         super(cause);
     }
+    public ParseError(Throwable cause,Info info) {
+        this(cause);
+        this.info = info;
+    }
+
+    public Info getInfo(){
+        return this.info;
+    }
+
 }

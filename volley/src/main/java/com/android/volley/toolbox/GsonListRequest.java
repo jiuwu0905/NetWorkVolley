@@ -20,7 +20,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.JsonError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -29,13 +28,13 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.bean.Info;
 import com.android.volley.encrypt.DES;
 import com.android.volley.tool.VolleyErrorListener;
 import com.android.volley.tool.VolleyListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.util.Map;
@@ -121,8 +120,10 @@ public class GsonListRequest<T> extends Request<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
+		VolleyError error;
+		String jsonString = null;
 		try {
-			String jsonString = new String(response.data,
+			jsonString = new String(response.data,
 					HttpHeaderParser.parseCharset(response.headers) );
 			if (decryption) {
                 if(TextUtils.isEmpty(mDesKey)){
@@ -136,13 +137,25 @@ public class GsonListRequest<T> extends Request<T> {
 			}
 			return (Response<T>) Response.success(
 					new Gson().fromJson(jsonString, type),HttpHeaderParser.parseCacheHeaders(response));
-		} catch (UnsupportedEncodingException e) {
-			return Response.error(new ParseError(e));
-		} catch (JsonSyntaxException je) {
-			return Response.error(new JsonError(je));
-		} catch (Exception e) {
-			return Response.error(new ParseError(e));
+		}  catch (Exception e) {
+			Info info = getInfo(jsonString);
+			return Response.error(new ParseError(e,info));
 		}
 	}
+
+
+
+	private Info getInfo(String jsonString){
+		if(jsonString == null) return null;
+		try {
+			return new Gson().fromJson(jsonString, Info.class);
+		} catch (JsonSyntaxException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+
 
 }

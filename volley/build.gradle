@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def android_versionName = "1.2"
+def android_versionName = "doWithError_1.4"
 
 android {
     compileSdkVersion 21
@@ -19,7 +19,6 @@ android {
         }
     }
 }
-
 
 
 
