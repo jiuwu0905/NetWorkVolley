@@ -68,7 +68,6 @@ public class HurlStack implements HttpStack {
     private final SSLSocketFactory mSslSocketFactory;
 
 
-    private  ArrayMap<String,String> headerMap;
 
     public HurlStack() {
         this((UrlRewriter)null);
@@ -93,8 +92,13 @@ public class HurlStack implements HttpStack {
 
     public HurlStack(ArrayMap headerMap){
         this();
-        this.headerMap = headerMap;
     }
+
+
+    public ArrayMap<String,String > getHeaderMap(){
+        return null;
+    }
+
 
 
     @Override
@@ -105,6 +109,8 @@ public class HurlStack implements HttpStack {
 
         map.putAll(request.getHeaders());
         map.putAll(additionalHeaders);
+
+        ArrayMap<String,String> headerMap = getHeaderMap();
         if(null != headerMap){
             map.putAll(headerMap);
         }
